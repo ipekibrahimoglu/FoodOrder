@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -31,7 +32,7 @@ namespace DataAccess.Concrete.InMemory
         }
         public async Task<Menu> GetByIdAsync(Guid id)
         {
-            return await Task.Run(() => _menus.SingleOrDefault(m => m.MenuId == id)); // linq sorgusu, FirstOrDefault() kullanilabilir
+            return await Task.Run(() => _menus.AsQueryable().SingleOrDefaultAsync(m => m.MenuId == id)); // linq sorgusu, FirstOrDefault() kullanilabilir
         }
 
         public async Task<IEnumerable<Menu>> GetAllAsync()
@@ -41,7 +42,7 @@ namespace DataAccess.Concrete.InMemory
 
         public async Task<IEnumerable<Menu>> GetByConditionAsync(Expression<Func<Menu, bool>> predicate)
         {
-            return await Task.Run(() => _menus.AsQueryable().Where(predicate).ToList());
+            return await Task.Run(() => _menus.AsQueryable().Where(predicate).ToListAsync());
         }
 
         public async Task AddAsync(Menu entity)
@@ -71,7 +72,7 @@ namespace DataAccess.Concrete.InMemory
 
         public async Task<IEnumerable<Menu>> GetMenusByRestaurantIdAsync(Guid restaurantId)
         {
-            return await Task.Run(() => _menus.Where(m => m.RestaurantId == restaurantId).ToList());
+            return await Task.Run(() => _menus.AsQueryable().Where(m => m.RestaurantId == restaurantId).ToListAsync()); // AsQueryable() ile veritabani sorgusu yapildi.
         }
     }
 }

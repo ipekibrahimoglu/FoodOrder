@@ -17,6 +17,7 @@ namespace Entities.Concrete
         public bool Status { get; set; } //enum ile guncelle  (enum: Pending, Preparing, Delivered, Cancelled)
 
         public User User { get; set; }
+        public Restaurant Restaurant { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

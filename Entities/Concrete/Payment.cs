@@ -16,6 +16,7 @@ namespace Entities.Concrete
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; } //(enum: CreditCard, DebitCard, Cash, Online) (enum: CreditCard, DebitCard, Cash, Online)
         public bool IsSuccessful { get; set; }
+        public Order Order { get; set; }
         
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Abstract;
@@ -19,6 +20,7 @@ namespace Entities.Concrete
 
         
         // Navigation Property: Bir kullanıcının sahip olduğu restoranlar
+        public ICollection<Review> Reviews { get; set; }
         public ICollection<Restaurant> OwnedRestaurants { get; set; }
 
     }

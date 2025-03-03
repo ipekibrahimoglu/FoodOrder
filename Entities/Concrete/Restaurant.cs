@@ -20,6 +20,7 @@ namespace Entities.Concrete
         public User Owner { get; set; }
 
         // Navigation Property: Restorana ait menüler
+        public ICollection<Review> Reviews { get; set; }
         public ICollection<Menu> Menus { get; set; }
 
     }
