@@ -4,10 +4,14 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Abstract;
+using Core.Entities;
+
 
 namespace Entities.Concrete
 {
+    //Role'u enum yap
+    //Database migrationini guncelle
+    //tum entitylerdeki null olabilirlikleri incele
     public class User : IEntity
     {
         public Guid UserId { get; set; } // guid kullanimi

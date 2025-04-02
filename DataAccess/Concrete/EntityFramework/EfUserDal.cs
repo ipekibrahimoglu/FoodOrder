@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DataAccess.EntityFramework;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal : EfGenericRepository<User>, IUserDal
+    public class EfUserDal : EfGenericRepository<User, SouthwindContext>, IUserDal
     {
         public async Task<User> GetByEmailAsync(string email)
         {

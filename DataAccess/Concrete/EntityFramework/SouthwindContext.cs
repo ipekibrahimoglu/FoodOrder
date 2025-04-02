@@ -86,8 +86,7 @@ namespace DataAccess.Concrete.EntityFramework
                 .HasForeignKey(r => r.RestaurantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Review>()
-                .HasCheckConstraint("CK_Review_Rating", "[Rating] >= 1 AND [Rating] <= 5");
+            modelBuilder.Entity<Review>().ToTable(x=>x.HasCheckConstraint("CK_Review_Rating", "[Rating] >= 1 AND [Rating] <= 5"));
 
             // Restaurant - Owner (User) ilişkisi
             modelBuilder.Entity<Restaurant>()

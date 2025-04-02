@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 
-
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Order : IEntity
+    public class OrderDto: IDto
     {
         public Guid OrderId { get; set; }
         public Guid UserId { get; set; }
@@ -17,8 +16,6 @@ namespace Entities.Concrete
         public decimal TotalPrice { get; set; }
         public bool Status { get; set; } //enum ile guncelle  (enum: Pending, Preparing, Delivered, Cancelled)
 
-        public User User { get; set; }
-        public Restaurant Restaurant { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public IEnumerable<OrderItemDto> OrderItems { get; set; } 
     }
 }

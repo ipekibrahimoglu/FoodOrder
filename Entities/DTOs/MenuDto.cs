@@ -1,21 +1,17 @@
-﻿using Core.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities;
 
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Menu : IEntity
+    public class MenuDto: IDto
     {
         public Guid MenuId { get; set; }
         public Guid RestaurantId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        
-        // Navigation Property: Menü hangi restorana ait?
-        public Restaurant Restaurant { get; set; }
-        public ICollection<MenuItem> MenuItems { get; set; }
     }
 }

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 
-
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class MenuItem : IEntity
+    public class MenuItemDto: IDto
     {
         public Guid MenuItemId { get; set; }
         public Guid MenuId { get; set; }
@@ -17,6 +15,5 @@ namespace Entities.Concrete
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
-        public Menu Menu { get; set; }
     }
 }

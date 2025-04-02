@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 
-
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Payment : IEntity
+    public class PaymentDto : IDto  
     {
         public Guid PaymentId { get; set; }
         public Guid OrderId { get; set; }
@@ -17,7 +15,5 @@ namespace Entities.Concrete
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; } //(enum: CreditCard, DebitCard, Cash, Online) (enum: CreditCard, DebitCard, Cash, Online)
         public bool IsSuccessful { get; set; }
-        public Order Order { get; set; }
-        
     }
 }

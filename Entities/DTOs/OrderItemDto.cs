@@ -5,18 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 
-
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class OrderItem : IEntity
+    public class OrderItemDto : IDto
     {
         public Guid OrderItemId { get; set; }
         public Guid OrderId { get; set; }
         public Guid MenuItemId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-
-        public Order Order { get; set; }
-        public MenuItem MenuItem { get; set; }
+        public IEnumerable<MenuItemDto> MenuItemDtos { get; set; }
     }
 }

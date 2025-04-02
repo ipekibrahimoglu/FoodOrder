@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Abstract
+namespace Core.Entities
 {
     public interface IEntity //Bir nesnenin veri tabani tablosu olup olmadigini isaret eder.
     {

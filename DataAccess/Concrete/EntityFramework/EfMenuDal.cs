@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DataAccess.EntityFramework;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfMenuDal : EfGenericRepository<Menu>, IMenuDal
+    public class EfMenuDal : EfGenericRepository<Menu, SouthwindContext>, IMenuDal
     {
         public async Task<IEnumerable<Menu>> GetMenusByRestaurantIdAsync(Guid restaurantId)
         {

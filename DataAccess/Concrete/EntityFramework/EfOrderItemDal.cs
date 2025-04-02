@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DataAccess.EntityFramework;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfOrderItemDal : EfGenericRepository<OrderItem>, IOrderItemDal
+    public class EfOrderItemDal : EfGenericRepository<OrderItem, SouthwindContext>, IOrderItemDal
     {
         public async Task<IEnumerable<OrderItem>> GetOrderItemsByOrderIdAsync(Guid orderId)
         {
