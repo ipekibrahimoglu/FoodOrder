@@ -16,6 +16,5 @@ namespace Entities.DTOs
         public decimal TotalPrice { get; set; }
         public bool Status { get; set; } //enum ile guncelle  (enum: Pending, Preparing, Delivered, Cancelled)
 
-        public IEnumerable<OrderItemDto> OrderItems { get; set; } 
     }
 }
