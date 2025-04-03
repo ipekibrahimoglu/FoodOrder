@@ -14,6 +14,6 @@ namespace Entities.DTOs
         public Guid MenuItemId { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public IEnumerable<MenuItemDto> MenuItemDtos { get; set; }
+
     }
 }

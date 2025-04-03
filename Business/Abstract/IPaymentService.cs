@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -16,5 +17,6 @@ namespace Business.Abstract
         Task AddAsync(Payment entity);
         Task UpdateAsync(Payment entity);
         Task DeleteAsync(Guid id);
+        Task<PaymentDto> GetPaymentByOrderIdAsync(Guid id);
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -77,7 +78,7 @@ namespace Business.Concrete
             await _menuDal.DeleteAsync(menuToDelete.MenuId); //parametrede degisiklik
         }
 
-        public async Task<IEnumerable<Menu>> GetMenusByRestaurantId(Guid restaurantId)
+        public async Task<IEnumerable<MenuDto>> GetMenusByRestaurantId(Guid restaurantId)
         {
             return await _menuDal.GetMenusByRestaurantIdAsync(restaurantId);
         }

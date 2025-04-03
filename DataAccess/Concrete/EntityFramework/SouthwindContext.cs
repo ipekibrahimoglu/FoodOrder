@@ -27,7 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
 
-
+        //DTOlari da eklemek gerekli olacak mi?
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Menu - Restaurant ilişkisi (bir Restaurant'ın birden fazla Menüsü olabilir)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -61,10 +62,9 @@ namespace Business.Concrete
             await _orderItemDal.DeleteAsync(orderItemToDelete.OrderItemId);
         }
 
-        public async Task<IEnumerable<OrderItem>> GetOrderItemsByOrderId(Guid orderId)
+        public async Task<IEnumerable<OrderItemDto>> GetOrderItemsByOrderId(Guid orderId)
         {
             var orderItems = await _orderItemDal.GetOrderItemsByOrderIdAsync(orderId);
-            // null mi kontrolleri
             return orderItems;
         }
     }

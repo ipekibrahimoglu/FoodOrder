@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public Guid RestaurantId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public bool Status { get; set; } //enum ile guncelle  (enum: Pending, Preparing, Delivered, Cancelled)
+        public bool Status { get; set; } //refactor edilebilir.
 
         public User User { get; set; }
         public Restaurant Restaurant { get; set; }

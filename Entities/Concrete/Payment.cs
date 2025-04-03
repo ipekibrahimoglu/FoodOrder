@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public Guid OrderId { get; set; }
         public DateTime PaymentDate { get; set; }
         public decimal Amount { get; set; }
-        public string PaymentMethod { get; set; } //(enum: CreditCard, DebitCard, Cash, Online) (enum: CreditCard, DebitCard, Cash, Online)
+        public string PaymentMethod { get; set; } 
         public bool IsSuccessful { get; set; }
         public Order Order { get; set; }
         

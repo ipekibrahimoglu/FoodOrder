@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -82,6 +83,11 @@ namespace Business.Concrete
             }
 
             await _menuItemDal.DeleteAsync(itemToDelete.MenuItemId);
+        }
+
+        public async Task<IEnumerable<MenuItemDto>> GetMenuItemsByMenuIdAsync(Guid id)
+        {
+            return await _menuItemDal.GetMenuItemsByMenuIdAsync(id);
         }
     }
 }

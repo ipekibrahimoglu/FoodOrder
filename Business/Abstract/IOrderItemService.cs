@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -16,6 +17,6 @@ namespace Business.Abstract
         Task AddAsync(OrderItem entity);
         Task UpdateAsync(OrderItem entity);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<OrderItem>> GetOrderItemsByOrderId(Guid orderId);
+        Task<IEnumerable<OrderItemDto>> GetOrderItemsByOrderId(Guid orderId);
     }
 }

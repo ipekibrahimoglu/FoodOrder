@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -80,7 +81,7 @@ namespace Business.Concrete
             await _orderDal.DeleteAsync(orderToDelete.OrderId);
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(Guid userId)
         {
             var orders = await _orderDal.GetOrdersByUserIdAsync(userId);
             if (orders == null)
@@ -89,6 +90,12 @@ namespace Business.Concrete
             }
 
             return orders;
+        }
+
+
+        public async Task<IEnumerable<OrderDto>> GetOrdersByRestaurantIdAsync(Guid id)
+        {
+            return await _orderDal.GetOrdersByRestaurantIdAsync(id);
         }
     }
 }

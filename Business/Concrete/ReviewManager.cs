@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -62,11 +63,16 @@ namespace Business.Concrete
             await _reviewDal.DeleteAsync(reviewToDelete.ReviewId);
         }
 
-        public async Task<IEnumerable<Review>> GetReviewsByRestaurantId(Guid restaurantId)
+        public async Task<IEnumerable<ReviewDto>> GetReviewsByRestaurantId(Guid id)
         {
-            var reviews = await _reviewDal.GetReviewsByRestaurantId(restaurantId);
+            var reviews = await _reviewDal.GetReviewsByRestaurantId(id);
             //null mi
             return reviews;
+        }
+
+        public async Task<IEnumerable<ReviewDto>> GetReviewsByUserId(Guid id)
+        {
+            return await _reviewDal.GetReviewsByUserId(id);
         }
     }
 }

@@ -9,7 +9,7 @@ using Core.Entities;
 
 namespace Entities.Concrete
 {
-    //Role'u enum yap
+    
     //Database migrationini guncelle
     //tum entitylerdeki null olabilirlikleri incele
     public class User : IEntity
@@ -18,7 +18,7 @@ namespace Entities.Concrete
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string Role { get; set; } //enum kullanarak yaz core katmanini entegre ettiginde (enum: Admin, Customer, RestaurantOwner)
+        public string Role { get; set; } 
 
         public string PhoneNumber { get; set; }
 

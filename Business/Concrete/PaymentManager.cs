@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -60,6 +61,11 @@ namespace Business.Concrete
             var paymentToDelete = await _paymentDal.GetByIdAsync(id);
             // null mi kontrolleri
             await _paymentDal.DeleteAsync(paymentToDelete.OrderId);
+        }
+
+        public async Task<PaymentDto> GetPaymentByOrderIdAsync(Guid id)
+        {
+            return await _paymentDal.GetPaymentByOrderIdAsync(id);
         }
     }
 }

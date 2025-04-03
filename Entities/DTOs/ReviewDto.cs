@@ -13,7 +13,6 @@ namespace Entities.DTOs
         public Guid UserId { get; set; }
         public Guid RestaurantId { get; set; }
         public int Rating { get; set; }
-        public IEnumerable<UserDto> UsersDtos { get; set; }
-        public IEnumerable<RestaurantDto> RestaurantDtos { get; set; }
+
     }
 }

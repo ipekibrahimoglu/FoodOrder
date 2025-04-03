@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -64,7 +65,7 @@ namespace Business.Concrete
             await _restaurantDal.DeleteAsync(restaurantToDelete.RestaurantId);
         }
 
-        public async Task<IEnumerable<Restaurant>> GetByOwnerIdAsync(Guid ownerId)
+        public async Task<IEnumerable<RestaurantDto>> GetByOwnerIdAsync(Guid ownerId)
         {
             var restaurants = await _restaurantDal.GetByOwnerIdAsync(ownerId);
             // null mi kontrolleri

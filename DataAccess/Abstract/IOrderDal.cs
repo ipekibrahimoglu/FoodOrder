@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.DataAccess;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Abstract;
 
 public interface IOrderDal : IGenericRepository<Order>
 {
-    Task<IEnumerable<Order>> GetOrdersByUserIdAsync(Guid userId);
+    Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(Guid userId);
+    Task<IEnumerable<OrderDto>> GetOrdersByRestaurantIdAsync(Guid restaurantId);
 }
