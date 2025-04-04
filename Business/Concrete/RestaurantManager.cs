@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -19,33 +20,34 @@ namespace Business.Concrete
         {
             _restaurantDal = restaurantDal;
         }
-        public async Task<Restaurant> GetByIdAsync(Guid id)
+        public async Task<IDataResult<Restaurant>> GetByIdAsync(Guid id)
         {
             var restaurant = await _restaurantDal.GetByIdAsync(id);
             // null mi kontrolleri
-            return restaurant;
+            return new SuccessDataResult<Restaurant>(restaurant);
         }
 
-        public async Task<IEnumerable<Restaurant>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<Restaurant>>> GetAllAsync()
         {
             var restaurants = await _restaurantDal.GetAllAsync();
             // null mi kontrolleri
-            return restaurants;
+            return new SuccessDataResult<IEnumerable<Restaurant>>(restaurants);
         }
 
-        public async Task<IEnumerable<Restaurant>> GetByConditionAsync(Expression<Func<Restaurant, bool>> predicate)
+        public async Task<IDataResult<IEnumerable<Restaurant>>> GetByConditionAsync(Expression<Func<Restaurant, bool>> predicate)
         {
             var restaurants = await _restaurantDal.GetByConditionAsync(predicate);
             // null mi kontrolleri
-            return restaurants;
+            return new SuccessDataResult<IEnumerable<Restaurant>>(restaurants);
         }
 
-        public async Task AddAsync(Restaurant entity)
+        public async Task<IResult> AddAsync(Restaurant entity)
         {
             await _restaurantDal.AddAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task UpdateAsync(Restaurant entity)
+        public async Task<IResult> UpdateAsync(Restaurant entity)
         {
             var existingRestaurant = await _restaurantDal.GetByIdAsync(entity.RestaurantId);
             // null mi kontrolleri
@@ -56,20 +58,22 @@ namespace Business.Concrete
             existingRestaurant.Owner = entity.Owner;
             existingRestaurant.PhoneNumber = entity.PhoneNumber;
             await _restaurantDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             var restaurantToDelete = await _restaurantDal.GetByIdAsync(id);
             // null mi kontrolleri
             await _restaurantDal.DeleteAsync(restaurantToDelete.RestaurantId);
+            return new SuccessResult();
         }
 
-        public async Task<IEnumerable<RestaurantDto>> GetByOwnerIdAsync(Guid ownerId)
+        public async Task<IDataResult<IEnumerable<RestaurantDto>>> GetRestaurantsByOwnerIdAsync(Guid ownerId)
         {
-            var restaurants = await _restaurantDal.GetByOwnerIdAsync(ownerId);
+            var restaurants = await _restaurantDal.GetRestaurantsByOwnerIdAsync(ownerId);
             // null mi kontrolleri
-            return restaurants;
+            return new SuccessDataResult<IEnumerable<RestaurantDto>>(restaurants);
         }
     }
 }

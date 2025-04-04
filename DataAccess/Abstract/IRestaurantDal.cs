@@ -6,5 +6,5 @@ namespace DataAccess.Abstract;
 
 public interface IRestaurantDal : IGenericRepository<Restaurant>
 {
-    Task<IEnumerable<RestaurantDto>> GetByOwnerIdAsync(Guid ownerId);
+    Task<IEnumerable<RestaurantDto>> GetRestaurantsByOwnerIdAsync(Guid ownerId);
 }

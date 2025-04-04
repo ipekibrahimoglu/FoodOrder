@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -20,33 +21,34 @@ namespace Business.Concrete
             _reviewDal = reviewDal;
         }
 
-        public async Task<Review> GetByIdAsync(Guid id)
+        public async Task<IDataResult<Review>> GetByIdAsync(Guid id)
         {
             var review = await _reviewDal.GetByIdAsync(id);
             //null mi
-            return review;
+            return new SuccessDataResult<Review>(review);
         }
 
-        public async Task<IEnumerable<Review>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<Review>>> GetAllAsync()
         {
             var reviews = await _reviewDal.GetAllAsync();
             // null mi
-            return reviews;
+            return new SuccessDataResult<IEnumerable<Review>>(reviews);
         }
 
-        public async Task<IEnumerable<Review>> GetByConditionAsync(Expression<Func<Review, bool>> predicate)
+        public async Task<IDataResult<IEnumerable<Review>>> GetByConditionAsync(Expression<Func<Review, bool>> predicate)
         {
             var reviews = await _reviewDal.GetByConditionAsync(predicate);
             // null mi
-            return reviews;
+            return new SuccessDataResult<IEnumerable<Review>>(reviews);
         }
 
-        public async Task AddAsync(Review entity)
+        public async Task<IResult> AddAsync(Review entity)
         {
             await _reviewDal.AddAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task UpdateAsync(Review entity)
+        public async Task<IResult> UpdateAsync(Review entity)
         {
             var existingReview = await _reviewDal.GetByIdAsync(entity.ReviewId);
             // null mi
@@ -54,25 +56,27 @@ namespace Business.Concrete
             existingReview.Rating = entity.Rating;
             existingReview.UserId = entity.UserId;
             await _reviewDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             var reviewToDelete = await _reviewDal.GetByIdAsync(id);
             // null mi
             await _reviewDal.DeleteAsync(reviewToDelete.ReviewId);
+            return new SuccessResult();
         }
 
-        public async Task<IEnumerable<ReviewDto>> GetReviewsByRestaurantId(Guid id)
+        public async Task<IDataResult<IEnumerable<ReviewDto>>> GetReviewsByRestaurantId(Guid id)
         {
             var reviews = await _reviewDal.GetReviewsByRestaurantId(id);
             //null mi
-            return reviews;
+            return new SuccessDataResult<IEnumerable<ReviewDto>>(reviews);
         }
 
-        public async Task<IEnumerable<ReviewDto>> GetReviewsByUserId(Guid id)
+        public async Task<IDataResult<IEnumerable<ReviewDto>>> GetReviewsByUserId(Guid id)
         {
-            return await _reviewDal.GetReviewsByUserId(id);
+            return new SuccessDataResult<IEnumerable<ReviewDto>>(await _reviewDal.GetReviewsByUserId(id));
         }
     }
 }

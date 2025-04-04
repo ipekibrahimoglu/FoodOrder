@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 
@@ -11,12 +12,12 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        Task<Payment> GetByIdAsync(Guid id);
-        Task<IEnumerable<Payment>> GetAllAsync();
-        Task<IEnumerable<Payment>> GetByConditionAsync(Expression<Func<Payment, bool>> predicate);
-        Task AddAsync(Payment entity);
-        Task UpdateAsync(Payment entity);
-        Task DeleteAsync(Guid id);
-        Task<PaymentDto> GetPaymentByOrderIdAsync(Guid id);
+        Task<IDataResult<Payment>> GetByIdAsync(Guid id);
+        Task<IDataResult<IEnumerable<Payment>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<Payment>>> GetByConditionAsync(Expression<Func<Payment, bool>> predicate);
+        Task<IResult> AddAsync(Payment entity);
+        Task<IResult> UpdateAsync(Payment entity);
+        Task<IResult> DeleteAsync(Guid id);
+        Task<IDataResult<PaymentDto>> GetPaymentByOrderIdAsync(Guid id);
     }
 }

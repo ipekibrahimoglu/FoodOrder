@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -20,7 +21,7 @@ namespace Business.Concrete
         {
             _orderDal = orderDal;
         }
-        public async Task<Order> GetByIdAsync(Guid id)
+        public async Task<IDataResult<Order>> GetByIdAsync(Guid id)
         {
             var order = await _orderDal.GetByIdAsync(id);
             if (order == null)
@@ -28,10 +29,10 @@ namespace Business.Concrete
                 throw new Exception("Order has not been found!");
             }
 
-            return order;
+            return new SuccessDataResult<Order>(order);
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<Order>>> GetAllAsync()
         {
             var orders = await _orderDal.GetAllAsync();
             if (orders == null)
@@ -39,10 +40,10 @@ namespace Business.Concrete
                 throw new Exception("Orders have not been found!");
             }
 
-            return orders;
+            return new SuccessDataResult<IEnumerable<Order>>(orders);
         }
 
-        public async Task<IEnumerable<Order>> GetByConditionAsync(Expression<Func<Order, bool>> predicate)
+        public async Task<IDataResult<IEnumerable<Order>>> GetByConditionAsync(Expression<Func<Order, bool>> predicate)
         {
             var orders = await _orderDal.GetByConditionAsync(predicate);
             if (orders == null)
@@ -50,15 +51,16 @@ namespace Business.Concrete
                 throw new Exception("Order(s) have not been found!");
             }
 
-            return orders;
+            return new SuccessDataResult<IEnumerable<Order>>(orders);
         }
 
-        public async Task AddAsync(Order entity)
+        public async Task<IResult> AddAsync(Order entity)
         {
            await _orderDal.AddAsync(entity);
+           return new SuccessResult();
         }
 
-        public async Task UpdateAsync(Order entity)
+        public async Task<IResult> UpdateAsync(Order entity)
         {
             var existingOrder =  await _orderDal.GetByIdAsync(entity.OrderId);
             if (existingOrder == null)
@@ -68,9 +70,10 @@ namespace Business.Concrete
 
             existingOrder.OrderItems = entity.OrderItems;
             await _orderDal.UpdateAsync(entity); // degismesi gerekebilir
+            return new SuccessResult();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             var orderToDelete = await _orderDal.GetByIdAsync(id);
             if (orderToDelete == null)
@@ -79,9 +82,10 @@ namespace Business.Concrete
             }
 
             await _orderDal.DeleteAsync(orderToDelete.OrderId);
+            return new SuccessResult();
         }
 
-        public async Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(Guid userId)
+        public async Task<IDataResult<IEnumerable<OrderDto>>> GetOrdersByUserIdAsync(Guid userId)
         {
             var orders = await _orderDal.GetOrdersByUserIdAsync(userId);
             if (orders == null)
@@ -89,13 +93,13 @@ namespace Business.Concrete
                 throw new Exception("No order(s) to fetch!");
             }
 
-            return orders;
+            return new SuccessDataResult<IEnumerable<OrderDto>>(orders);
         }
 
 
-        public async Task<IEnumerable<OrderDto>> GetOrdersByRestaurantIdAsync(Guid id)
+        public async Task<IDataResult<IEnumerable<OrderDto>>> GetOrdersByRestaurantIdAsync(Guid id)
         {
-            return await _orderDal.GetOrdersByRestaurantIdAsync(id);
+            return new SuccessDataResult<IEnumerable<OrderDto>>(await _orderDal.GetOrdersByRestaurantIdAsync(id));
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -20,33 +21,34 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<IDataResult<User>> GetByIdAsync(Guid id)
         {
             var user = await _userDal.GetByIdAsync(id);
             // null mi
-            return user;
+            return new SuccessDataResult<User>(user);
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<User>>> GetAllAsync()
         {
             var users = await _userDal.GetAllAsync();
             // null mi
-            return users;
+            return new SuccessDataResult<IEnumerable<User>>(users);
         }
 
-        public async Task<IEnumerable<User>> GetByConditionAsync(Expression<Func<User, bool>> predicate)
+        public async Task<IDataResult<IEnumerable<User>>> GetByConditionAsync(Expression<Func<User, bool>> predicate)
         {
             var users = await _userDal.GetByConditionAsync(predicate);
             // null mi
-            return users;
+            return new SuccessDataResult<IEnumerable<User>>(users);
         }
 
-        public async Task AddAsync(User entity)
+        public async Task<IResult> AddAsync(User entity)
         {
             await _userDal.AddAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task UpdateAsync(User entity)
+        public async Task<IResult> UpdateAsync(User entity)
         {
             var existingUser = await _userDal.GetByIdAsync(entity.UserId);
             // null mi
@@ -56,20 +58,22 @@ namespace Business.Concrete
             existingUser.PhoneNumber = entity.PhoneNumber;
             existingUser.Role = entity.Role;
             await _userDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             var userToDelete = await _userDal.GetByIdAsync(id);
             // null mi
             await _userDal.DeleteAsync(userToDelete.UserId);
+            return new SuccessResult();
         }
 
-        public async Task<UserDto> GetByEmailAsync(string email)
+        public async Task<IDataResult<UserDto>> GetByEmailAsync(string email)
         {
             var user = await _userDal.GetByEmailAsync(email);
             // null mi
-            return user;
+            return new SuccessDataResult<UserDto>(user);
         }
         }
     }

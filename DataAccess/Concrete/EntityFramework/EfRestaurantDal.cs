@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRestaurantDal : EfGenericRepository<Restaurant, SouthwindContext>, IRestaurantDal
     {
-        public async Task<IEnumerable<RestaurantDto>> GetByOwnerIdAsync(Guid ownerId)
+        public async Task<IEnumerable<RestaurantDto>> GetRestaurantsByOwnerIdAsync(Guid ownerId)
         {
             using var context = new SouthwindContext();
             var restaurants = await context.Restaurants

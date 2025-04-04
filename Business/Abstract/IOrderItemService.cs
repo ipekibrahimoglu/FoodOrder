@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 
@@ -11,12 +12,12 @@ namespace Business.Abstract
 {
     public interface IOrderItemService
     {
-        Task<OrderItem> GetByIdAsync(Guid id);
-        Task<IEnumerable<OrderItem>> GetAllAsync();
-        Task<IEnumerable<OrderItem>> GetByConditionAsync(Expression<Func<OrderItem, bool>>predicate);
-        Task AddAsync(OrderItem entity);
-        Task UpdateAsync(OrderItem entity);
-        Task DeleteAsync(Guid id);
-        Task<IEnumerable<OrderItemDto>> GetOrderItemsByOrderId(Guid orderId);
+        Task<IDataResult<OrderItem>> GetByIdAsync(Guid id);
+        Task<IDataResult<IEnumerable<OrderItem>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<OrderItem>>> GetByConditionAsync(Expression<Func<OrderItem, bool>>predicate);
+        Task<IResult> AddAsync(OrderItem entity);
+        Task<IResult> UpdateAsync(OrderItem entity);
+        Task<IResult> DeleteAsync(Guid id);
+        Task<IDataResult<IEnumerable<OrderItemDto>>> GetOrderItemsByOrderId(Guid orderId);
     }
 }
