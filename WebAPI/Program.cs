@@ -22,6 +22,7 @@ namespace WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //Autofac, Ninject, CastleWindsor, StructureMap, LightInject, DryInject --> IoC Container
             //User
             builder.Services.AddScoped<IUserService, UserManager>();
             builder.Services.AddScoped<IUserDal, EfUserDal>();

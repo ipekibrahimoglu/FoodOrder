@@ -48,6 +48,8 @@ namespace WebAPI.Controllers
             return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
 
+
+        //Gerekirse HTTP status codelarda Created(), NotFound() gibi yapilar kullanilabilir
         [HttpPost]
         public async Task<IActionResult> Add(MenuItem entity)
         {

@@ -12,6 +12,16 @@ namespace DataAccess.Concrete.EntityFramework
     // Db tablolari ile proje classlari iliskisi
     public class SouthwindContext : DbContext
     {
+        public SouthwindContext()
+        {
+            //bos ctor
+        }
+        //WebAPI'da AddDbContext() fonksiyonunu calistirabilmek icin ctor overload edildi.
+        public SouthwindContext(DbContextOptions<SouthwindContext> options)
+            : base(options)
+        {
+        }
+
         //proje-veritabani iliskisini belirtir
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,6 +40,39 @@ namespace DataAccess.Concrete.EntityFramework
         //DTOlari da eklemek gerekli olacak mi?
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .Property(u => u.UserId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.RestaurantId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<Menu>()
+                .Property(m => m.MenuId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<MenuItem>()
+                .Property(mi => mi.MenuItemId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.OrderItemId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.PaymentId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            modelBuilder.Entity<Review>()
+                .Property(r => r.ReviewId)
+                .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+            //----------------------------------------------------------------------------
             // Menu - Restaurant ilişkisi (bir Restaurant'ın birden fazla Menüsü olabilir)
             modelBuilder.Entity<Menu>()
                 .HasOne(m => m.Restaurant)
