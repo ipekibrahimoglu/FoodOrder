@@ -146,7 +146,7 @@ namespace DataAccess.Migrations
                     MenuId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true), 
                     ImageUrl = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>

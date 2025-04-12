@@ -71,6 +71,17 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Review>()
                 .Property(r => r.ReviewId)
                 .HasDefaultValueSql("NEWSEQUENTIALID()");
+            //----------------------------------------------------------------
+
+            modelBuilder.Entity<MenuItem>()
+                .Property(mi => mi.Description)
+                .HasMaxLength(500)
+                .IsRequired(false);  // artık optional
+
+            modelBuilder.Entity<MenuItem>()
+                .Property(mi => mi.ImageUrl)
+                .HasMaxLength(200)
+                .IsRequired(false);
 
             //----------------------------------------------------------------------------
             // Menu - Restaurant ilişkisi (bir Restaurant'ın birden fazla Menüsü olabilir)
