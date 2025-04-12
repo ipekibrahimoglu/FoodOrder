@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
+using Entities.Concrete;
 
 namespace Entities.DTOs
 {
@@ -15,5 +16,6 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
+        public IEnumerable<ReviewDto> Reviews { get; set; } 
     }
 }

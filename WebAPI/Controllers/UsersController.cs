@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
                 : BadRequest(result.Message);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")] //ambigious route olmasin diye duzeltildi
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _userService.GetByIdAsync(id);

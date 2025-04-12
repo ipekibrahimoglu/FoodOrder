@@ -21,8 +21,8 @@ namespace Entities.Concrete
         public User Owner { get; set; }
 
         // Navigation Property: Restorana ait menüler
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Menu> Menus { get; set; }
+        public ICollection<Review> Reviews { get; set; } = new List<Review>(); // nulldan korumak icin 
+        public ICollection<Menu> Menus { get; set; } = new List<Menu>();
 
     }
 }
