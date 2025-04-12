@@ -103,7 +103,29 @@ namespace DataAccess.Concrete.EntityFramework
                 .HasForeignKey(p => p.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+            //------------------------------------------------------------------------------------------
+
+            modelBuilder.Entity<MenuItem>()
+                .Property(mi => mi.Price)
+                .HasColumnType("decimal(18,2)");
+
+            // Order.TotalPrice için
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalPrice)
+                .HasColumnType("decimal(18,2)");
+
+            // OrderItem.Price için
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.Price)
+                .HasColumnType("decimal(18,2)");
+
+            // Payment.Amount için
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasColumnType("decimal(18,2)");
 
             base.OnModelCreating(modelBuilder);
         }

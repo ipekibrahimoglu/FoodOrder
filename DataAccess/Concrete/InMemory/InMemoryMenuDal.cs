@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
+using Entities.DTOs;    // MenuDto burada tanımlı olduğunu varsayıyoruz
 
 namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryMenuDal : IMenuDal
     {
-        private List<Menu> _menus;
+        private readonly List<Menu> _menus;
 
         public InMemoryMenuDal()
         {
@@ -20,59 +19,81 @@ namespace DataAccess.Concrete.InMemory
             {
                 new Menu
                 {
-                    MenuId = Guid.NewGuid(), Name = "Pizza", Description = "Delicious cheese pizza",
+                    MenuId = Guid.NewGuid(),
+                    Name = "Pizza",
+                    Description = "Delicious cheese pizza",
                     RestaurantId = Guid.NewGuid()
                 },
                 new Menu
                 {
-                    MenuId = Guid.NewGuid(), Name = "Burger", Description = "Juicy beef burger",
+                    MenuId = Guid.NewGuid(),
+                    Name = "Burger",
+                    Description = "Juicy beef burger",
                     RestaurantId = Guid.NewGuid()
                 }
             };
         }
-        public async Task<Menu> GetByIdAsync(Guid id)
+
+        public Task<Menu> GetByIdAsync(Guid id)
         {
-            return await Task.Run(() => _menus.AsQueryable().SingleOrDefaultAsync(m => m.MenuId == id)); // linq sorgusu, FirstOrDefault() kullanilabilir
+            var menu = _menus.SingleOrDefault(m => m.MenuId == id);
+            return Task.FromResult(menu);
         }
 
-        public async Task<IEnumerable<Menu>> GetAllAsync()
+        public Task<IEnumerable<Menu>> GetAllAsync()
         {
-            return await Task.Run(() => _menus);
+            return Task.FromResult<IEnumerable<Menu>>(_menus);
         }
 
-        public async Task<IEnumerable<Menu>> GetByConditionAsync(Expression<Func<Menu, bool>> predicate)
+        public Task<IEnumerable<Menu>> GetByConditionAsync(Expression<Func<Menu, bool>> predicate)
         {
-            return await Task.Run(() => _menus.AsQueryable().Where(predicate).ToListAsync());
+            var result = _menus.AsQueryable()
+                               .Where(predicate)
+                               .ToList();
+            return Task.FromResult<IEnumerable<Menu>>(result);
         }
 
-        public async Task AddAsync(Menu entity)
+        public Task AddAsync(Menu entity)
         {
-            await Task.Run(() => _menus.Add(entity)).ConfigureAwait(false);
+            _menus.Add(entity);
+            return Task.CompletedTask;
         }
 
-        public async Task UpdateAsync(Menu entity)
+        public Task UpdateAsync(Menu entity)
         {
-            var existingMenu = await GetByIdAsync(entity.MenuId);
-            if (existingMenu != null)
+            var existing = _menus.SingleOrDefault(m => m.MenuId == entity.MenuId);
+            if (existing != null)
             {
-                existingMenu.Name = entity.Name;
-                existingMenu.Description = entity.Description;
-                existingMenu.RestaurantId = entity.RestaurantId;
+                existing.Name = entity.Name;
+                existing.Description = entity.Description;
+                existing.RestaurantId = entity.RestaurantId;
             }
+            return Task.CompletedTask;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public Task DeleteAsync(Guid id)
         {
-            var menuToDelete = await GetByIdAsync(id);
-            if (menuToDelete != null)
-            {
-                _menus.Remove(menuToDelete);
-            }
+            var toDelete = _menus.SingleOrDefault(m => m.MenuId == id);
+            if (toDelete != null)
+                _menus.Remove(toDelete);
+            return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Menu>> GetMenusByRestaurantIdAsync(Guid restaurantId)
+        // IMenuDal'ın bu metodu Task<IEnumerable<MenuDto>> dönmeli:
+        public Task<IEnumerable<MenuDto>> GetMenusByRestaurantIdAsync(Guid restaurantId)
         {
-            return await Task.Run(() => _menus.AsQueryable().Where(m => m.RestaurantId == restaurantId).ToListAsync()); // AsQueryable() ile veritabani sorgusu yapildi.
+            var dtos = _menus
+                .Where(m => m.RestaurantId == restaurantId)
+                .Select(m => new MenuDto
+                {
+                    MenuId = m.MenuId,
+                    Name = m.Name,
+                    Description = m.Description,
+                    RestaurantId = m.RestaurantId
+                })
+                .ToList();
+
+            return Task.FromResult<IEnumerable<MenuDto>>(dtos);
         }
     }
 }

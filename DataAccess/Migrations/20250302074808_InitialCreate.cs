@@ -11,32 +11,39 @@ namespace DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Users
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    FullName = table.Column<string>(maxLength: 100, nullable: false),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    PasswordHash = table.Column<string>(maxLength: 200, nullable: false),
+                    Role = table.Column<string>(maxLength: 20, nullable: false),   
+                    PhoneNumber = table.Column<string>(maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                 });
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
+            // Restaurants
             migrationBuilder.CreateTable(
                 name: "Restaurants",
                 columns: table => new
                 {
-                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RestaurantId = table.Column<Guid>(nullable: false),
+                    OwnerId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 150, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    Address = table.Column<string>(maxLength: 200, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,14 +56,15 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            // Menus
             migrationBuilder.CreateTable(
                 name: "Menus",
                 columns: table => new
                 {
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MenuId = table.Column<Guid>(nullable: false),
+                    RestaurantId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,16 +77,17 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Orders
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    RestaurantId = table.Column<Guid>(nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<string>(maxLength: 20, nullable: false) // string olarak bırakıldı
                 },
                 constraints: table =>
                 {
@@ -97,14 +106,15 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            // Reviews (sadece orijinal sütunlar)
             migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
-                    ReviewId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false)
+                    ReviewId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    RestaurantId = table.Column<Guid>(nullable: false),
+                    Rating = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,17 +132,22 @@ namespace DataAccess.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+            migrationBuilder.AddCheckConstraint(
+                name: "CK_Reviews_Rating",
+                table: "Reviews",
+                sql: "[Rating] >= 1 AND [Rating] <= 5");
 
+            // MenuItems
             migrationBuilder.CreateTable(
                 name: "MenuItems",
                 columns: table => new
                 {
-                    MenuItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MenuItemId = table.Column<Guid>(nullable: false),
+                    MenuId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    ImageUrl = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -145,16 +160,17 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            // Payments
             migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
-                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaymentId = table.Column<Guid>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
+                    PaymentDate = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsSuccessful = table.Column<bool>(type: "bit", nullable: false)
+                    PaymentMethod = table.Column<string>(maxLength: 50, nullable: false),
+                    IsSuccessful = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,14 +183,15 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // OrderItems
             migrationBuilder.CreateTable(
                 name: "OrderItems",
                 columns: table => new
                 {
-                    OrderItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    OrderItemId = table.Column<Guid>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
+                    MenuItemId = table.Column<Guid>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -194,56 +211,19 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_MenuItems_MenuId",
-                table: "MenuItems",
-                column: "MenuId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Menus_RestaurantId",
-                table: "Menus",
-                column: "RestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_MenuItemId",
-                table: "OrderItems",
-                column: "MenuItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
-                table: "OrderItems",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_RestaurantId",
-                table: "Orders",
-                column: "RestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_OrderId",
-                table: "Payments",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Restaurants_OwnerId",
-                table: "Restaurants",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_RestaurantId",
-                table: "Reviews",
-                column: "RestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserId",
-                table: "Reviews",
-                column: "UserId");
+            // Indexler
+            migrationBuilder.CreateIndex(name: "IX_Restaurants_OwnerId", table: "Restaurants", column: "OwnerId");
+            migrationBuilder.CreateIndex(name: "IX_Menus_RestaurantId", table: "Menus", column: "RestaurantId");
+            migrationBuilder.CreateIndex(name: "IX_Orders_UserId", table: "Orders", column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_Orders_RestaurantId", table: "Orders", column: "RestaurantId");
+            migrationBuilder.CreateIndex(name: "IX_Reviews_UserId", table: "Reviews", column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_Reviews_RestaurantId", table: "Reviews", column: "RestaurantId");
+            migrationBuilder.CreateIndex(name: "IX_MenuItems_MenuId", table: "MenuItems", column: "MenuId");
+            migrationBuilder.CreateIndex(name: "IX_Payments_OrderId", table: "Payments", column: "OrderId");
+            migrationBuilder.CreateIndex(name: "IX_OrderItems_OrderId", table: "OrderItems", column: "OrderId");
+            migrationBuilder.CreateIndex(name: "IX_OrderItems_MenuItemId", table: "OrderItems", column: "MenuItemId");
         }
+
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
