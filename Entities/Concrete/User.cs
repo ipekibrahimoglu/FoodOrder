@@ -20,7 +20,7 @@ namespace Entities.Concrete
         public string PasswordHash { get; set; }
         public string Role { get; set; } 
 
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         
         // Navigation Property: Bir kullanıcının sahip olduğu restoranlar

@@ -12,7 +12,7 @@ namespace Entities.Concrete
         public Guid MenuId { get; set; }
         public Guid RestaurantId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         
         // Navigation Property: Menü hangi restorana ait?
         public Restaurant Restaurant { get; set; }

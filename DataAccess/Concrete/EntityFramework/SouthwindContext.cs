@@ -169,6 +169,131 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Payment>()
                 .Property(p => p.Amount)
                 .HasColumnType("decimal(18,2)");
+            //-----------------------------------Data Seeding--------------------------------------------
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    UserId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    FullName = "Basak Selin Sertel",
+                    Email = "basak@gmail.com",
+                    PasswordHash = "hashedPwd1",
+                    Role = "RestaurantOwner",
+                    PhoneNumber = "555-000-1111"
+                },
+                new User
+                {
+                    UserId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                    FullName = "Muratcan Kara",
+                    Email = "muratfivem@gmail.com",
+                    PasswordHash = "hashedPwd2",
+                    Role = "Customer",
+                    PhoneNumber = null
+                }
+            );
+
+            
+            modelBuilder.Entity<Restaurant>().HasData(
+                new Restaurant
+                {
+                    RestaurantId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                    OwnerId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    Name = "Dish up!",
+                    Description = "Türk mutfağından seçkin lezzetler",
+                    Address = "Muh fakultesi",
+                    PhoneNumber = "0212-000-0000"
+                }
+            );
+
+            
+            modelBuilder.Entity<Menu>().HasData(
+                new Menu
+                {
+                    MenuId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    RestaurantId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                    Name = "Ana Yemekler",
+                    Description = "Et ve tavuk çeşitleri"
+                }
+            );
+
+            
+            modelBuilder.Entity<MenuItem>().HasData(
+                new MenuItem
+                {
+                    MenuItemId = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                    MenuId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    Name = "Adana Kebap",
+                    Price = 85.00m, // sayisal sabit turu m ile belirtilir ( implicitly double -> decimal )
+                    Description = "Acılı acısız seçenekleriyle",
+                    ImageUrl = null
+                },
+                new MenuItem
+                {
+                    MenuItemId = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                    MenuId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    Name = "Tavuk Şiş",
+                    Price = 75.00m,
+                    Description = "Özel marinasyonlu tavuk",
+                    ImageUrl = null
+                }
+            );
+
+            
+            modelBuilder.Entity<Order>().HasData(
+                new Order
+                {
+                    OrderId = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                    UserId = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                    RestaurantId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                    OrderDate = DateTime.Parse("2025-04-10T12:00:00"),
+                    TotalPrice = 160.00m,
+                    Status = "Pending" // status booldan stringe cekildi
+                }
+            );
+
+            
+            modelBuilder.Entity<OrderItem>().HasData(
+                new OrderItem
+                {
+                    OrderItemId = Guid.Parse("77777777-7777-7777-7777-777777777777"),
+                    OrderId = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                    MenuItemId = Guid.Parse("44444444-4444-4444-4444-444444444444"),
+                    Quantity = 1,
+                    Price = 85.00m
+                },
+                new OrderItem
+                {
+                    OrderItemId = Guid.Parse("88888888-8888-8888-8888-888888888888"),
+                    OrderId = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                    MenuItemId = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                    Quantity = 1,
+                    Price = 75.00m
+                }
+            );
+
+            
+            modelBuilder.Entity<Payment>().HasData(
+                new Payment
+                {
+                    PaymentId = Guid.Parse("99999999-9999-9999-9999-999999999999"),
+                    OrderId = Guid.Parse("66666666-6666-6666-6666-666666666666"),
+                    PaymentDate = DateTime.Parse("2025-04-10T12:05:00"),
+                    Amount = 160.00m,
+                    PaymentMethod = "CreditCard",
+                    IsSuccessful = true
+                }
+            );
+
+            
+            modelBuilder.Entity<Review>().HasData(
+                new Review
+                {
+                    ReviewId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                    UserId = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                    RestaurantId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                    Rating = 5
+                }
+            );
 
             base.OnModelCreating(modelBuilder);
         }
