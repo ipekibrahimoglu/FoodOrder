@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public string? Description { get; set; }
         
         // Navigation Property: Menü hangi restorana ait?
-        public Restaurant Restaurant { get; set; }
-        public ICollection<MenuItem> MenuItems { get; set; }
+        public Restaurant? Restaurant { get; set; }
+        public ICollection<MenuItem>? MenuItems { get; set; }
     }
 }

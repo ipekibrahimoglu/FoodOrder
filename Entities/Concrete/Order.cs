@@ -17,8 +17,8 @@ namespace Entities.Concrete
         public decimal TotalPrice { get; set; }
         public string Status { get; set; } //refactor edilebilir.
 
-        public User User { get; set; }
-        public Restaurant Restaurant { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public User? User { get; set; }
+        public Restaurant? Restaurant { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
     }
 }

@@ -17,6 +17,6 @@ namespace Entities.Concrete
         public decimal Price { get; set; }
         public string? Description { get; set; } 
         public string? ImageUrl { get; set; } // nullable
-        public Menu Menu { get; set; }
+        public Menu? Menu { get; set; }
     }
 }

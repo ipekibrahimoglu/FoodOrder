@@ -24,8 +24,8 @@ namespace Entities.Concrete
 
         
         // Navigation Property: Bir kullanıcının sahip olduğu restoranlar
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Restaurant> OwnedRestaurants { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
+        public ICollection<Restaurant>? OwnedRestaurants { get; set; }
 
     }
 }

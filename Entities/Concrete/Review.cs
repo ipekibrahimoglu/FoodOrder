@@ -18,7 +18,7 @@ namespace Entities.Concrete
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")] 
         public int Rating { get; set; } // fluent validation kodu yazıldı.
 
-        public User User { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public User? User { get; set; }
+        public Restaurant? Restaurant { get; set; }
     }
 }

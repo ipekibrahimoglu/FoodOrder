@@ -17,7 +17,7 @@ namespace Entities.Concrete
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; } 
         public bool IsSuccessful { get; set; }
-        public Order Order { get; set; }
+        public Order? Order { get; set; }
         
     }
 }
