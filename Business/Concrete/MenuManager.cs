@@ -32,10 +32,10 @@ namespace Business.Concrete
             return new SuccessDataResult<Menu>(menu);
         }
 
-        public async Task<IDataResult<IEnumerable<Menu>>> GetAllASync()
+        public async Task<IDataResult<IEnumerable<MenuDto>>> GetAllASync()
         {
-            var menus = await _menuDal.GetAllAsync();
-            return new SuccessDataResult<IEnumerable<Menu>>(menus);
+            var menus = await _menuDal.GetAllWithDetailsAsync();
+            return new SuccessDataResult<IEnumerable<MenuDto>>(menus);
         }
 
         public async Task<IDataResult<IEnumerable<Menu>>> GetByConditionASync(Expression<Func<Menu, bool>> predicate)

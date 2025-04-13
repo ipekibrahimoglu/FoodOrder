@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IUserService
     {
         Task<IDataResult<User>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<User>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<UserDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<User>>> GetByConditionAsync(Expression<Func<User, bool>> predicate);
         Task<IResult> AddAsync(User entity);
         Task<IResult> UpdateAsync(User entity);

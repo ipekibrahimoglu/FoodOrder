@@ -12,5 +12,6 @@ namespace DataAccess.Abstract
     public interface IMenuDal : IGenericRepository<Menu>
     {
         Task<IEnumerable<MenuDto>> GetMenusByRestaurantIdAsync(Guid restaurantId);
+        Task<IEnumerable<MenuDto>> GetAllWithDetailsAsync();
     }
 }

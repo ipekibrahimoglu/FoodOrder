@@ -7,4 +7,5 @@ namespace DataAccess.Abstract;
 public interface IOrderItemDal : IGenericRepository<OrderItem>
 {
     Task<IEnumerable<OrderItemDto>> GetOrderItemsByOrderIdAsync(Guid orderId);
+    Task<IEnumerable<OrderItemDto>> GetAllWithDetailsAsync();
 }

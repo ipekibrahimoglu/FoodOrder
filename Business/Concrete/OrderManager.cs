@@ -32,15 +32,15 @@ namespace Business.Concrete
             return new SuccessDataResult<Order>(order);
         }
 
-        public async Task<IDataResult<IEnumerable<Order>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<OrderDto>>> GetAllAsync()
         {
-            var orders = await _orderDal.GetAllAsync();
+            var orders = await _orderDal.GetAllWithDetailsAsync();
             if (orders == null)
             {
                 throw new Exception("Orders have not been found!");
             }
 
-            return new SuccessDataResult<IEnumerable<Order>>(orders);
+            return new SuccessDataResult<IEnumerable<OrderDto>>(orders);
         }
 
         public async Task<IDataResult<IEnumerable<Order>>> GetByConditionAsync(Expression<Func<Order, bool>> predicate)

@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IReviewService
     {
         Task<IDataResult<Review>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<Review>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<ReviewDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<Review>>> GetByConditionAsync(Expression<Func<Review, bool>> predicate);
         Task<IResult> AddAsync(Review entity);
         Task<IResult> UpdateAsync(Review entity);

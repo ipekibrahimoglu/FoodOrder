@@ -27,11 +27,11 @@ namespace Business.Concrete
             return new SuccessDataResult<OrderItem>(orderItem);
         }
 
-        public async Task<IDataResult<IEnumerable<OrderItem>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<OrderItemDto>>> GetAllAsync()
         {
-            var orderItems = await _orderItemDal.GetAllAsync();
+            var orderItems = await _orderItemDal.GetAllWithDetailsAsync();
             // null mi kontrolleri
-            return new SuccessDataResult<IEnumerable<OrderItem>>(orderItems);
+            return new SuccessDataResult<IEnumerable<OrderItemDto>>(orderItems);
         }
 
         public async Task<IDataResult<IEnumerable<OrderItem>>> GetByConditionAsync(Expression<Func<OrderItem, bool>> predicate)

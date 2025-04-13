@@ -14,7 +14,7 @@ namespace Business.Abstract
     {
         
         Task<IDataResult<Menu>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<Menu>>> GetAllASync();
+        Task<IDataResult<IEnumerable<MenuDto>>> GetAllASync();
         Task<IDataResult<IEnumerable<Menu>>> GetByConditionASync(Expression<Func<Menu, bool>> predicate);
         Task<IResult> AddAsync(Menu entity);
         Task<IResult> UpdateAsync(Menu entity);

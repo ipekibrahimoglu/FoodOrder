@@ -95,5 +95,10 @@ namespace DataAccess.Concrete.InMemory
 
             return Task.FromResult<IEnumerable<MenuDto>>(dtos);
         }
+
+        public async Task<IEnumerable<MenuDto>> GetAllWithDetailsAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -68,5 +68,46 @@ namespace DataAccess.Concrete.EntityFramework
                 }).ToListAsync();
             return orders;
         }
+
+        public async Task<IEnumerable<OrderDto>> GetAllWithDetailsAsync()
+        {
+            using var context = new SouthwindContext();
+            var result = await context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Restaurant)
+                .Include(o => o.OrderItems)
+                .Select(o => new OrderDto
+                {
+                    OrderDate = o.OrderDate,
+                    OrderId = o.OrderId,
+                    RestaurantId = o.RestaurantId,
+                    Status = o.Status,
+                    TotalPrice = o.TotalPrice,
+                    UserId = o.UserId,
+                    User = new UserDto()
+                    {
+                        Email = o.User.Email,
+                        FullName = o.User.FullName,
+                        PhoneNumber = o.User.PhoneNumber,
+                        Role = o.User.Role,
+                        UserId = o.UserId
+                    },
+                    Restaurant = new RestaurantDto
+                    {
+                        Address = o.Restaurant.Address,
+                        Name = o.Restaurant.Name,
+                        RestaurantId = o.Restaurant.RestaurantId,
+                        PhoneNumber = o.Restaurant.PhoneNumber
+                    },
+                    OrderItems = o.OrderItems.Select(oi => new OrderItemDto
+                    {
+                        Price = oi.Price,
+                        Quantity = oi.Quantity,
+                        OrderItemId = oi.OrderItemId
+                    }).ToList()
+
+                }).ToListAsync();
+            return result;
+        }
     }
 }

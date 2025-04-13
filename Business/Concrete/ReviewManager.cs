@@ -28,11 +28,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Review>(review);
         }
 
-        public async Task<IDataResult<IEnumerable<Review>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<ReviewDto>>> GetAllAsync()
         {
-            var reviews = await _reviewDal.GetAllAsync();
+            var reviews = await _reviewDal.GetAllWithDetailsAsync();
             // null mi
-            return new SuccessDataResult<IEnumerable<Review>>(reviews);
+            return new SuccessDataResult<IEnumerable<ReviewDto>>(reviews);
         }
 
         public async Task<IDataResult<IEnumerable<Review>>> GetByConditionAsync(Expression<Func<Review, bool>> predicate)

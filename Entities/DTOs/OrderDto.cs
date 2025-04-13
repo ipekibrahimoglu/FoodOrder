@@ -14,8 +14,9 @@ namespace Entities.DTOs
         public Guid RestaurantId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public string Status { get; set; } 
-
-        public IEnumerable<OrderItemDto> OrderItems { get; set; } 
+        public string Status { get; set; }
+        public UserDto? User { get; set; }
+        public RestaurantDto? Restaurant { get; set; }
+        public IEnumerable<OrderItemDto>? OrderItems { get; set; } 
     }
 }

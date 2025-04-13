@@ -27,11 +27,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Payment>(payment);
         }
 
-        public async Task<IDataResult<IEnumerable<Payment>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<PaymentDto>>> GetAllAsync()
         {
-            var payments = await _paymentDal.GetAllAsync();
+            var payments = await _paymentDal.GetAllWithDetailsAsync();
             // null mi kontrolleri
-            return new SuccessDataResult<IEnumerable<Payment>>(payments);
+            return new SuccessDataResult<IEnumerable<PaymentDto>>(payments);
         }
 
         public async Task<IDataResult<IEnumerable<Payment>>> GetByConditionAsync(Expression<Func<Payment, bool>> predicate)

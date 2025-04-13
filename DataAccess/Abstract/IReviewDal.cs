@@ -8,4 +8,5 @@ public interface IReviewDal : IGenericRepository<Review>
 {
     Task<IEnumerable<ReviewDto>> GetReviewsByRestaurantId(Guid restaurantId);
     Task<IEnumerable<ReviewDto>> GetReviewsByUserId(Guid userId);
+    Task<IEnumerable<ReviewDto>> GetAllWithDetailsAsync();
 }

@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IPaymentService
     {
         Task<IDataResult<Payment>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<Payment>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<PaymentDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<Payment>>> GetByConditionAsync(Expression<Func<Payment, bool>> predicate);
         Task<IResult> AddAsync(Payment entity);
         Task<IResult> UpdateAsync(Payment entity);

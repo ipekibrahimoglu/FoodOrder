@@ -8,4 +8,5 @@ namespace DataAccess.Abstract;
 public interface IPaymentDal : IGenericRepository<Payment>
 {
     Task<PaymentDto> GetPaymentByOrderIdAsync(Guid orderId);
+    Task<IEnumerable<PaymentDto>> GetAllWithDetailsAsync();
 }

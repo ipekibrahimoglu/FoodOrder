@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IMenuItemService
     {
         Task<IDataResult<MenuItem>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<MenuItem>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<MenuItemDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<MenuItem>>> GetByConditionAsync(Expression<Func<MenuItem, bool>> predicate);
         Task<IResult> AddAsync(MenuItem entity);
         Task<IResult> UpdateAsync(MenuItem entity);

@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IRestaurantService
     {
         Task<IDataResult<Restaurant>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<Restaurant>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<RestaurantDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<Restaurant>>> GetByConditionAsync(Expression<Func<Restaurant, bool>> predicate);
         Task<IResult> AddAsync(Restaurant entity);
         Task<IResult> UpdateAsync(Restaurant entity);

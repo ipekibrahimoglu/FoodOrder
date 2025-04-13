@@ -13,4 +13,5 @@ public interface IOrderDal : IGenericRepository<Order>
 {
     Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(Guid userId);
     Task<IEnumerable<OrderDto>> GetOrdersByRestaurantIdAsync(Guid restaurantId);
+    Task<IEnumerable<OrderDto>> GetAllWithDetailsAsync();
 }

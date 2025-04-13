@@ -7,4 +7,5 @@ namespace DataAccess.Abstract;
 public interface IUserDal : IGenericRepository<User>
 {
     Task<UserDto> GetByEmailAsync(string email);
+    Task<IEnumerable<UserDto>> GetAllWithDetailsAsync();
 }

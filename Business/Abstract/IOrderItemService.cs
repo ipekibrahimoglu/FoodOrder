@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface IOrderItemService
     {
         Task<IDataResult<OrderItem>> GetByIdAsync(Guid id);
-        Task<IDataResult<IEnumerable<OrderItem>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<OrderItemDto>>> GetAllAsync();
         Task<IDataResult<IEnumerable<OrderItem>>> GetByConditionAsync(Expression<Func<OrderItem, bool>>predicate);
         Task<IResult> AddAsync(OrderItem entity);
         Task<IResult> UpdateAsync(OrderItem entity);

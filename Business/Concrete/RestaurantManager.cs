@@ -27,11 +27,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Restaurant>(restaurant);
         }
 
-        public async Task<IDataResult<IEnumerable<Restaurant>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<RestaurantDto>>> GetAllAsync()
         {
-            var restaurants = await _restaurantDal.GetAllAsync();
+            var restaurants = await _restaurantDal.GetAllWithDetailsAsync();
             // null mi kontrolleri
-            return new SuccessDataResult<IEnumerable<Restaurant>>(restaurants);
+            return new SuccessDataResult<IEnumerable<RestaurantDto>>(restaurants);
         }
 
         public async Task<IDataResult<IEnumerable<Restaurant>>> GetByConditionAsync(Expression<Func<Restaurant, bool>> predicate)

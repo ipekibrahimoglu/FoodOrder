@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
@@ -16,6 +17,8 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public IEnumerable<ReviewDto> Reviews { get; set; } 
+        public UserDto? User { get; set; }
+        public IEnumerable<MenuDto>? Menus { get; set; }
+        public IEnumerable<ReviewDto>? Reviews { get; set; } 
     }
 }
