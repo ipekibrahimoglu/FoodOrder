@@ -1,5 +1,8 @@
-
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Business.DependencyResolvers.Autofac;
 using System.Text.Json.Serialization;
+using Autofac.Core;
 using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
@@ -13,6 +16,12 @@ namespace WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(containerBuilder =>
+                {
+                    containerBuilder.RegisterModule(new AutofacBusinessModule());
+                });
+                    
 
             builder.Services.AddDbContext<SouthwindContext>(options => options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -25,39 +34,6 @@ namespace WebAPI
             builder.Services.AddSwaggerGen();
 
             //Autofac, Ninject, CastleWindsor, StructureMap, LightInject, DryInject --> IoC Container
-            //User
-            builder.Services.AddScoped<IUserService, UserManager>();
-            builder.Services.AddScoped<IUserDal, EfUserDal>();
-
-            //Menu
-            builder.Services.AddScoped<IMenuService, MenuManager>();
-            builder.Services.AddScoped<IMenuDal, EfMenuDal>();
-
-            //MenuItem
-            builder.Services.AddScoped<IMenuItemService, MenuItemManager>();
-            builder.Services.AddScoped<IMenuItemDal, EfMenuItemDal>();
-
-            //Order
-            builder.Services.AddScoped<IOrderService, OrderManager>();
-            builder.Services.AddScoped<IOrderDal, EfOrderDal>();
-
-            //OrderItem
-            builder.Services.AddScoped<IOrderItemService, OrderItemManager>();
-            builder.Services.AddScoped<IOrderItemDal, EfOrderItemDal>();
-
-            //Payment
-            builder.Services.AddScoped<IPaymentService, PaymentManager>();
-            builder.Services.AddScoped<IPaymentDal, EfPaymentDal>();
-
-            //Restaurant
-            builder.Services.AddScoped<IRestaurantService, RestaurantManager>();
-            builder.Services.AddScoped<IRestaurantDal, EfRestaurantDal>();
-
-            //Review
-            builder.Services.AddScoped<IReviewService, ReviewManager>();
-            builder.Services.AddScoped<IReviewDal, EfReviewDal>();
-
-            
 
             var app = builder.Build();
 
