@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Constants;
 using Business.Helpers;
 using Entities.Concrete;
 using FluentValidation;
@@ -18,9 +19,9 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(o => o.OrderDate).NotEmpty();
             RuleFor(o => o.TotalPrice).NotEmpty().GreaterThan(0).Must(tp => ValidationHelpers
                 .HasValidDecimalPrecision(tp, 18, 2));
-            RuleFor(o => o.Status).NotEmpty()
+            RuleFor(o => o.Status).NotEmpty().WithMessage(Messages.OrderStatusRequired)
                 .Must(s => s == "Pending" || s == "Preparing" || s =="Delivered" || s == "Cancelled")
-                .WithMessage("Status sadece 'Pending', 'Preparing', 'Delivered' veya 'Cancelled' olabilir.");
+                .WithMessage(Messages.OrderStatusInvalid);
         }
     }
 }

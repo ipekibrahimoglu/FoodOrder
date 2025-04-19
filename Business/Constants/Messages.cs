@@ -63,6 +63,42 @@ namespace Business.Constants
         public static string ReviewDeleted = "Review deleted successfully.";
         public static string ReviewsListed = "Reviews listed successfully.";
         public static string ReviewNotFound = "Review not found.";
+
+        // User
+        public const string UserFullNameRequired = "Ad Soyad boş bırakılamaz!";
+        public const string UserEmailRequired = "E-posta adresi boş bırakılamaz!";
+        public const string UserEmailInvalid = "Geçerli bir e-posta adresi giriniz!";
+        public const string UserPasswordRequired = "Şifre alanı boş bırakılamaz!";
+        public const string UserRoleRequired = "Kullanıcı rolü belirtilmelidir!";
+
+        // Restaurant
+        public const string RestaurantNameRequired = "Restoran adı boş olamaz!";
+        public const string RestaurantAddressRequired = "Adres alanı boş olamaz!";
+
+        // Menu
+        public const string MenuNameRequired = "Menü adı boş bırakılamaz!";
+
+        // MenuItem
+        public const string MenuItemNameRequired = "Ürün adı boş bırakılamaz!";
+        public const string MenuItemPricePositive = "Fiyat 0'dan büyük olmalıdır!";
+        public const string MenuItemPricePrecision = "Fiyat en fazla 2 ondalık basamak ve toplam 18 basamak içerebilir.";
+
+        // Order
+        public const string OrderStatusRequired = "Sipariş durumu boş bırakılamaz!";
+        public const string OrderStatusInvalid = "Geçerli bir sipariş durumu giriniz! (Pending, Preparing, Delivered, Cancelled)";
+
+        // OrderItem
+        public const string OrderItemQuantityPositive = "Adet 1 veya daha fazla olmalıdır!";
+        public const string OrderItemPricePositive = "Ürün fiyatı 0'dan büyük olmalıdır!";
+        public const string OrderItemPricePrecision = "Fiyat en fazla 2 ondalık basamak ve toplam 18 basamak içerebilir.";
+
+        // Review
+        public const string ReviewRatingRange = "Puanlama '1' ile '5' arasında yapılmalıdır!";
+
+        // Payment
+        public const string PaymentAmountPositive = "Ödeme tutarı 0'dan büyük olmalıdır!";
+        public const string PaymentPrecision = "Tutar en fazla 2 ondalık basamak ve toplam 18 basamak içerebilir!";
+        public const string PaymentMethodRequired = "Ödeme yöntemi boş olamaz!";
     }
 }
 
