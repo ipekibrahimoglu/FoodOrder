@@ -1,5 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using FluentValidation;
+using Business.ValidationRules.FluentValidation;
 using Business.DependencyResolvers.Autofac;
 using System.Text.Json.Serialization;
 using Autofac.Core;
@@ -29,6 +31,8 @@ namespace WebAPI
 
             builder.Services.AddControllers().AddJsonOptions(opts => 
                 opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault);
+            builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
