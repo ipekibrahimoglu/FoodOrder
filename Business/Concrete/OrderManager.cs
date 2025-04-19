@@ -56,7 +56,10 @@ namespace Business.Concrete
 
         public async Task<IResult> AddAsync(Order entity)
         {
-           await _orderDal.AddAsync(entity);
+            if (string.IsNullOrEmpty(entity.Status))
+                entity.Status = "Pending";
+
+            await _orderDal.AddAsync(entity);
            return new SuccessResult();
         }
 

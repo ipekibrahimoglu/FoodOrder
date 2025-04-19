@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -51,14 +52,17 @@ namespace Business.Concrete
         public async Task<IResult> UpdateAsync(User entity)
         {
             var existingUser = await _userDal.GetByIdAsync(entity.UserId);
-            // null mi
+            if (existingUser == null)
+            {
+                return new ErrorResult(Messages.UserNotFound);
+            }
+
             existingUser.Email = entity.Email;
             existingUser.FullName = entity.FullName;
-            existingUser.OwnedRestaurants = entity.OwnedRestaurants; // burayi nasil yonetecegini coz
             existingUser.PhoneNumber = entity.PhoneNumber;
             existingUser.Role = entity.Role;
-            await _userDal.UpdateAsync(entity);
-            return new SuccessResult();
+            await _userDal.UpdateAsync(existingUser);
+            return new SuccessResult(Messages.UserUpdated);
         }
 
         public async Task<IResult> DeleteAsync(Guid id)
