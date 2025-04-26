@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Logging;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -29,6 +30,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user);
         }
 
+        [LogAspect]
         public async Task<IDataResult<IEnumerable<UserDto>>> GetAllAsync()
         {
             var users = await _userDal.GetAllWithDetailsAsync();

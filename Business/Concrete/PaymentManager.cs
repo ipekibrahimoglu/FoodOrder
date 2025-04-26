@@ -43,6 +43,9 @@ namespace Business.Concrete
 
         public async Task<IResult> AddAsync(Payment entity)
         {
+            if (!entity.IsSuccessful)
+                entity.IsSuccessful = false;
+            
             await _paymentDal.AddAsync(entity);
             return new SuccessResult();
         }

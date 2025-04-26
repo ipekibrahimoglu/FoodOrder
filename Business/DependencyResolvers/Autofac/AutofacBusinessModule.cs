@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
+using Castle.DynamicProxy;
+using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Module = Autofac.Module;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -32,6 +37,14 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfRestaurantDal>().As<IRestaurantDal>().InstancePerLifetimeScope();
             builder.RegisterType<EfReviewDal>().As<IReviewDal>().InstancePerLifetimeScope();
             builder.RegisterType<EfUserDal>().As<IUserDal>().InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions
+                {
+                    Selector = new AspectInterceptorSelector()
+                })
+                .SingleInstance();
         }
     }
 }
